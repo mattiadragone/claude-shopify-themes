@@ -116,6 +116,73 @@ When a block contains other blocks, presets must specify `block_order`:
 }
 ```
 
+## Block granularity
+
+### Avoid over-granular blocks
+
+Don't split closely related attributes into separate blocks. Group them into a single block that makes sense as a unit.
+
+**Wrong — too granular:**
+- Block: Author name
+- Block: Post date
+- Block: Comment count
+
+**Right — grouped:**
+- Block: Post meta (author, date, comment count as settings)
+
+The test: if a merchant would never add one without the other, they belong in the same block.
+
+### Block layout rules
+
+- **Vertical stacking**: use for text-based content where hierarchy matters (heading → subheading → body).
+- **Horizontal / adaptive grid**: use when blocks are peers with no hierarchy (features grid, icon list).
+- Blocks must reflow correctly across breakpoints — don't assume a minimum block count or fixed column count.
+- **Don't rely on block order for layout logic.** Block order is merchant-controlled. A section must look professional with any sequence and any combination of accepted block types.
+
+### When to use app blocks
+
+Before adding `{ "type": "@app" }` to a section's accept list, evaluate:
+
+- **Clear use case**: is there an obvious reason a merchant would add an app here? Product info → reviews app, loyalty badges — yes. Hero banner — probably not.
+- **Layout resilience**: does the layout hold up if an unexpected app block is inserted? If it breaks, don't offer `@app`.
+- **CSS edge cases**: avoid `@app` support if it requires excessive conditional CSS to handle unknown block shapes.
+- **Purpose clarity**: if `@app` makes the section's purpose ambiguous, reconsider.
+
+## Metafields and dynamic sources
+
+### Reference metafields via dynamic sources
+
+Use dynamic sources in block settings to let merchants bind metafield values without hardcoding them:
+
+```json
+{
+  "type": "text",
+  "id": "custom_label",
+  "label": "t:settings.custom_label",
+  "default": "",
+  "dynamic_sources": true
+}
+```
+
+Merchants can then select a metafield as the source directly in the theme editor.
+
+### Build metafield-specific blocks
+
+For structured metafield types (rating, volume, dimension, file), build dedicated blocks that render the metafield correctly:
+
+```liquid
+{%- comment -%} blocks/product-rating.liquid {%- endcomment -%}
+<div class="block-rating" {{ block.shopify_attributes }}>
+  {%- assign rating = product.metafields.reviews.rating.value -%}
+  {%- if rating -%}
+    <span class="rating-value">{{ rating.rating }}</span>
+    <span class="rating-scale">/ {{ rating.scale_max }}</span>
+  {%- endif -%}
+</div>
+```
+
+Audit common metafield namespaces for your target segment and build blocks for the ones merchants in that space commonly use.
+
 ## CSS scoping (same pitfall as sections/snippets)
 
 Block `{% stylesheet %}` content goes into the global `section.css` bundle. Every selector inside MUST be scoped to the block class (e.g., `.block-heading`).
