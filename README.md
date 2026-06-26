@@ -1,4 +1,4 @@
-# claude-shopify-themes
+# storefront-theme-kit
 
 A **Claude Code plugin** for building and auditing Shopify themes. Install it once and you get three
 action skills plus a full Shopify-theme knowledge base — no manual copying into `.claude/skills/`.
@@ -17,7 +17,7 @@ Change a rule once in `knowledge/`, and every skill that uses it stays correct.
 ## Architecture
 
 ```
-claude-shopify-themes/
+storefront-theme-kit/
 │
 ├── .claude-plugin/             ← PLUGIN manifest + marketplace catalog
 │   ├── plugin.json             name, version, description
@@ -89,31 +89,42 @@ knowledge reference explaining each one.
 
 ---
 
-## Installation (Claude Code plugin)
+## Installation
 
-Add this repo as a marketplace, then install the plugin:
+Requires [Claude Code](https://claude.com/claude-code). Pick one of the two methods.
 
-```text
-/plugin marketplace add mattiadragone/claude-shopify-themes
-/plugin install claude-shopify-themes@mattiadragone
-```
+### Option A — via the marketplace (recommended)
 
-The skills become available namespaced under the plugin — Claude invokes them automatically when a task
-matches, or you can call them explicitly:
+In any Claude Code session, run:
 
 ```text
-/claude-shopify-themes:shopify-build
-/claude-shopify-themes:shopify-audit
-/claude-shopify-themes:shopify-tooling
+/plugin marketplace add mattiadragone/storefront-theme-kit
+/plugin install storefront-theme-kit@mattiadragone
 ```
 
-Update later with `/plugin marketplace update mattiadragone`.
+Later, get updates with `/plugin marketplace update mattiadragone`.
 
-### Try it locally without installing
+### Option B — without the marketplace
+
+Clone the repo and point Claude Code at it:
 
 ```bash
-git clone https://github.com/mattiadragone/claude-shopify-themes
-claude --plugin-dir ./claude-shopify-themes
+git clone https://github.com/mattiadragone/storefront-theme-kit
+claude --plugin-dir ./storefront-theme-kit
+```
+
+`--plugin-dir` loads the plugin for that session only — handy if you'd rather not add a marketplace, or
+want to pin a specific version.
+
+### Using the skills
+
+The skills are namespaced under the plugin. Claude invokes them automatically when your task matches, or
+you can call one explicitly:
+
+```text
+/storefront-theme-kit:shopify-build
+/storefront-theme-kit:shopify-audit
+/storefront-theme-kit:shopify-tooling
 ```
 
 ---
@@ -129,9 +140,8 @@ skill triggers automatically:
   each finding with the fix, why it matters, and the knowledge file to read.
 - *"Set up Shopify CLI and a theme-check CI"* → `shopify-tooling` configures the toolchain.
 
-You can also invoke a skill explicitly with `/claude-shopify-themes:shopify-build` (and `:shopify-audit`,
-`:shopify-tooling`). The skills read the rules from `knowledge/` on demand, so the same project rules are
-applied whether you build or audit.
+The skills read the rules from `knowledge/` on demand, so the same project rules apply whether you build
+or audit.
 
 ---
 

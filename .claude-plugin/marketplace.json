@@ -1,12 +1,12 @@
 {
   "name": "mattiadragone",
-  "description": "Mattia Dragone's Claude Code plugins, including claude-shopify-themes for Shopify theme development.",
+  "description": "Mattia Dragone's Claude Code plugins, including storefront-theme-kit for Shopify theme development.",
   "owner": {
     "name": "Mattia Dragone"
   },
   "plugins": [
     {
-      "name": "claude-shopify-themes",
+      "name": "storefront-theme-kit",
       "source": "./",
       "description": "Build and audit Shopify themes with Claude Code — build, audit, and tooling skills backed by a Shopify theme knowledge base.",
       "version": "2.0.0",

@@ -1,6 +1,6 @@
 # Shopify Theme Skills
 
-A **Claude Code plugin** (`claude-shopify-themes`) for developing and auditing Shopify themes. The project
+A **Claude Code plugin** (`storefront-theme-kit`) for developing and auditing Shopify themes. The project
 separates **rules** from **actions**:
 
 - **`knowledge/`** — the rules. One file per Shopify area. Single source of truth. No actions.
